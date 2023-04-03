@@ -19,56 +19,45 @@
                 <div class="col">
                     <div id="webcam-container"></div>
                 <div class="col">
-                    <div><button type="button" onclick="init()" style="float: right;color: whitesmoke;background-color: green;">Start</button></div>
+                    	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
+			 &nbsp;
+			<button class="btn btn-danger" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
                 </div>
             </div>
         </div>
-        <div><h2 style="text-align: center;color:red">Results</h2></div>
+        <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
         <script type="text/javascript">
-            // More API functions here:
-            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-        
-            // the link to your model provided by Teachable Machine export panel
+
             const URL = "./";
-        
             let model, webcam, labelContainer, maxPredictions;
-        
-            // Load the image model and setup the webcam
+
             async function init() {
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
         
-                // load the model and metadata
-                // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-                // or files from your local hard drive
-                // Note: the pose library adds "tmImage" object to your window (window.tmImage)
                 model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();
         
-                // Convenience function to setup a webcam
-                const flip = true; // whether to flip the webcam
-                webcam = new tmImage.Webcam(500, 500, flip); // width, height, flip
+                const flip = true; 
+                webcam = new tmImage.Webcam(500, 400, flip);
                 const facingMode = {exact: "environment"};
-                await webcam.setup({facingMode}); // request access to the webcam
+                await webcam.setup({facingMode});
                 await webcam.play();
                 window.requestAnimationFrame(loop);
         
-                // append elements to the DOM
                 document.getElementById("webcam-container").appendChild(webcam.canvas);
                 labelContainer = document.getElementById("label-container");
-                for (let i = 0; i < maxPredictions; i++) { // and class labels
+                for (let i = 0; i < maxPredictions; i++) { 
                     labelContainer.appendChild(document.createElement("div"));
                 }
             }
         
             async function loop() {
-                webcam.update(); // update the webcam frame
+                webcam.update(); 
                 await predict();
                 window.requestAnimationFrame(loop);
             }
-        
-            // run the webcam image through the image model
             async function predict() {
         
                 const prediction = await model.predict(webcam.canvas);
@@ -78,6 +67,9 @@
                     labelContainer.childNodes[i].innerHTML = classPrediction;
                 }
             }
+		function stopWC(){
+			webcam.stop();
+		}
         </script>
 
     </body>
