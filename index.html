@@ -26,11 +26,23 @@
         </div>
         <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
+        <button class="btn btn-info" onclick="test()"></button>
         <script type="text/javascript">
             const URL = "./";  
             let model, webcam, labelContainer, maxPredictions;
             
-            msg = "test to be done, is it working?";
+            var msg = "test to be done, is it working?";
+            function test(){
+                let speech = new SpeechSynthesisUtterance();
+                        speech.lang = "en-US";
+                        speech.volume = 1;
+                        speech.rate = 1;
+                        speech.pitch = 1; 
+                        speech.text = msg;
+                        setInterval(() => {
+                            window.speechSynthesis.speak(speech);
+                        },2000);
+            }
             async function init() {
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";      
@@ -107,7 +119,8 @@
                         speech.text = msg;
                         setInterval(() => {
                             window.speechSynthesis.speak(speech);
-                        },2000)
+                        },2000);
+                        
                     }
                 }
             }
