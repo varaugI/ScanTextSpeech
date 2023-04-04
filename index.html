@@ -111,6 +111,7 @@
                         speech.addEventListener("end", (event) => {
                             if(event.utterance.text.charAt(event.charIndex)=msg.length){
                                 window.speechSynthesis.cancel();
+                                window.speechSynthesis.pause();
                             }
                         });   
                     }
