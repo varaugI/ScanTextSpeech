@@ -107,8 +107,8 @@
                         setInterval(() => {
                             window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
-                            window.speechSynthesis.pause();
                         },2000);  
+                        window.speechSynthesis.pause();
                     }
                 }
             }
