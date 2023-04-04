@@ -26,7 +26,7 @@
         </div>
         <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
-        <button class="btn btn-info" hidden>Stop Reading</button>
+        <button class="btn btn-info" id="stopR" hidden>Stop Reading</button>
         <script type="text/javascript">
             const URL = "./";  
             let model, webcam, labelContainer, maxPredictions;
@@ -107,7 +107,12 @@
                         setInterval(() => {
                             window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
-                        },2000);        
+                        },2000);
+                        utterThis.addEventListener("end", (event) => {
+                            if(event.utterance.text.charAt(event.charIndex)=msg.length){
+                                window.speechSynthesis.cancel();
+                            }
+                        });   
                     }
                 }
             }
