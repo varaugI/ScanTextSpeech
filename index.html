@@ -108,7 +108,7 @@
                             window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
                         },2000);
-                        utterThis.addEventListener("end", (event) => {
+                        speech.addEventListener("end", (event) => {
                             if(event.utterance.text.charAt(event.charIndex)=msg.length){
                                 window.speechSynthesis.cancel();
                             }
