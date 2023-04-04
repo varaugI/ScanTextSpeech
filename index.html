@@ -20,29 +20,16 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
-			<button class="btn btn-danger" onclick="stopWC()" style="color: whitesmoke;">Stop</button>
+			            <button class="btn btn-danger" onclick="stopWC()" style="color: whitesmoke;">Stop Scanning</button>
                 </div>
             </div>
         </div>
         <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
-        <button class="btn btn-info" onclick="test()">hh</button>
+        <button class="btn btn-info" hidden>Stop Reading</button>
         <script type="text/javascript">
             const URL = "./";  
             let model, webcam, labelContainer, maxPredictions;
-            
-            var msg = "test to be done, is it working?";
-            function test(){
-                let speech = new SpeechSynthesisUtterance();
-                        speech.lang = "en-US";
-                        speech.volume = 1;
-                        speech.rate = 1;
-                        speech.pitch = 1; 
-                        speech.text = msg;
-                        setInterval(() => {
-                            window.speechSynthesis.speak(speech);
-                        },2000);
-            }
             async function init() {
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";      
@@ -118,10 +105,9 @@
                         speech.pitch = 1; 
                         speech.text = msg;
                         setInterval(() => {
-                            window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
-                        },2000);
-                        
+                            window.speechSynthesis.cancel();
+                        },2000);        
                     }
                 }
             }
