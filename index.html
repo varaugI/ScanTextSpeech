@@ -20,7 +20,7 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
-			<button class="btn btn-danger" id="stop" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
+			<button class="btn btn-danger" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             const URL = "./";  
             let model, webcam, labelContainer, maxPredictions;
             
-            
+            msg = "test to be done, is it working?";
             async function init() {
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";      
@@ -107,7 +107,7 @@
                         speech.text = msg;
                         setInterval(() => {
                             window.speechSynthesis.speak(speech);
-                        },2000);
+                        },2000)
                     }
                 }
             }
