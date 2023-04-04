@@ -20,37 +20,41 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
-			 &nbsp;
 			<button class="btn btn-danger" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
                 </div>
             </div>
         </div>
         <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
+        <p id="bottle" hidden>this is bottle</p>
+        <p id="pen" hidden>A pen</p>
+        <p id="coin" hidden>it's a coin</p>
+        <p id="mobile" hidden>Mobile here</p>
+        <p id="watch" hidden>Watch, to check time</p>
+        <p id="desktop" hidden>DESKTOP</p>
+        <p id="notebook" hidden>Notebook to write</p>
+        <p id="chair" hidden>Chair to sit</p>
+        <p id="hair" hidden>Hair</p>
+        <p id="dog" hidden>Wow, Bhow. Dog</p>
         <script type="text/javascript">
 
             const URL = "./";
+            
             let model, webcam, labelContainer, maxPredictions;
-
+            
             async function init() {
                 const modelURL = URL + "model.json";
-                const metadataURL = URL + "metadata.json";
-        
+                const metadataURL = URL + "metadata.json";      
                 model = await tmImage.load(modelURL, metadataURL);
-                maxPredictions = model.getTotalClasses();
-        
+                maxPredictions = model.getTotalClasses();        
                 const flip = true; 
-                webcam = new tmImage.Webcam(500, 400, flip);
+                webcam = new tmImage.Webcam(400, 400, flip);
                 const facingMode = {exact: "environment"};
                 await webcam.setup({facingMode});
                 await webcam.play();
-                window.requestAnimationFrame(loop);
-        
+                window.requestAnimationFrame(loop);      
                 document.getElementById("webcam-container").appendChild(webcam.canvas);
                 labelContainer = document.getElementById("label-container");
-                for (let i = 0; i < maxPredictions; i++) { 
-                    labelContainer.appendChild(document.createElement("div"));
-                }
             }
         
             async function loop() {
@@ -62,13 +66,47 @@
         
                 const prediction = await model.predict(webcam.canvas);
                 for (let i = 0; i < maxPredictions; i++) {
-                    if(prediction[i].probability.toFixed(2) * 100>95){
-                        labelContainer.childNodes[i].innerHTML = prediction[i].className;
+                    if(prediction[i].probability.toFixed(2) * 100>97){
+                        
+                        if(prediction[i].className === "BOTTLE" ){
+                            labelContainer.innerHTML = document.getElementById('bottle').innerHTML;
+                        }
+                        else if(prediction[i].className === "PEN" ){
+                            labelContainer.innerHTML = document.getElementById('pen').innerHTML;
+                        }
+                        else if(prediction[i].className === "COIN" ){
+                            labelContainer.innerHTML = document.getElementById('coin').innerHTML;
+                        }
+                        else if(prediction[i].className === "MOBILE" ){
+                            labelContainer.innerHTML = document.getElementById('mobile').innerHTML;
+                        }
+                        else if(prediction[i].className === "WATCH" ){
+                            labelContainer.innerHTML = document.getElementById('watch').innerHTML;
+                        }
+                        else if(prediction[i].className === "NOTEBOOK" ){
+                            labelContainer.childNodes[i].innerHTML = document.getElementById('notebook').innerHTML;
+                        }
+                        else if(prediction[i].className === "DESKTOP" ){
+                            labelContainer.innerHTML = document.getElementById('desktop').innerHTML;
+                        }
+                        else if(prediction[i].className === "CHAIR" ){
+                            labelContainer.innerHTML = document.getElementById('chair').innerHTML;
+                        }
+                        else if(prediction[i].className === "HAIR" ){
+                            labelContainer.innerHTML = document.getElementById('hair').innerHTML;
+                        }
+                        else if(prediction[i].className === "DOG" ){
+                            labelContainer.innerHTML = document.getElementById('dog').innerHTML;
+                        }
+                        else{
+                            labelContainer.innerHTML = "Error loading"
+                        }
                     }
                 }
             }
 		    function stopWC(){
 			    webcam.stop();
+                document.getElementById("webcam-container").removeChild(webcam.canvas);
 		    }
         </script>
 
