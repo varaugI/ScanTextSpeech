@@ -19,7 +19,7 @@
                 <div class="col">
                     <div id="webcam-container"></div>
                 <div class="col">
-                    	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
+                    	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start Scanning</button>
 			            <button class="btn btn-danger" onclick="stopWC()" style="color: whitesmoke;">Stop Scanning</button>
                 </div>
             </div>
@@ -105,8 +105,8 @@
                         speech.pitch = 1; 
                         speech.text = msg;
                         setInterval(() => {
-                            window.speechSynthesis.speak(speech);
                             window.speechSynthesis.cancel();
+                            window.speechSynthesis.speak(speech);
                         },2000);        
                     }
                 }
