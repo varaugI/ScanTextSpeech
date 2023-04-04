@@ -20,27 +20,16 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start</button>
-			<button class="btn btn-danger" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
+			<button class="btn btn-danger" id="stop" onclick="stopWC()" style="float: right;color: whitesmoke;">Stop</button>
                 </div>
             </div>
         </div>
         <div><h2 style="text-align: center;color:blue">Results</h2></div>
         <div id="label-container" style="font-size: x-large;text-align: center;font-weight: bolder;"></div>
-        <p id="bottle" hidden>this is bottle</p>
-        <p id="pen" hidden>A pen</p>
-        <p id="coin" hidden>it's a coin</p>
-        <p id="mobile" hidden>Mobile here</p>
-        <p id="watch" hidden>Watch, to check time</p>
-        <p id="desktop" hidden>DESKTOP</p>
-        <p id="notebook" hidden>Notebook to write</p>
-        <p id="chair" hidden>Chair to sit</p>
-        <p id="hair" hidden>Hair</p>
-        <p id="dog" hidden>Wow, Bhow. Dog</p>
         <script type="text/javascript">
-
-            const URL = "./";
-            
+            const URL = "./";  
             let model, webcam, labelContainer, maxPredictions;
+            
             
             async function init() {
                 const modelURL = URL + "model.json";
@@ -48,7 +37,7 @@
                 model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();        
                 const flip = true; 
-                webcam = new tmImage.Webcam(400, 400, flip);
+                webcam = new tmImage.Webcam(420, 420, flip);
                 const facingMode = {exact: "environment"};
                 await webcam.setup({facingMode});
                 await webcam.play();
@@ -56,51 +45,69 @@
                 document.getElementById("webcam-container").appendChild(webcam.canvas);
                 labelContainer = document.getElementById("label-container");
             }
-        
             async function loop() {
                 webcam.update(); 
                 await predict();
                 window.requestAnimationFrame(loop);
             }
             async function predict() {
-        
                 const prediction = await model.predict(webcam.canvas);
                 for (let i = 0; i < maxPredictions; i++) {
                     if(prediction[i].probability.toFixed(2) * 100>97){
-                        
                         if(prediction[i].className === "BOTTLE" ){
-                            labelContainer.innerHTML = document.getElementById('bottle').innerHTML;
+                            labelContainer.innerHTML = "BOTTLE";
+                            var msg = "bottle here, what to do?";     
                         }
                         else if(prediction[i].className === "PEN" ){
-                            labelContainer.innerHTML = document.getElementById('pen').innerHTML;
+                            labelContainer.innerHTML = "PEN";
+                            var msg = "A pen here";
                         }
                         else if(prediction[i].className === "COIN" ){
-                            labelContainer.innerHTML = document.getElementById('coin').innerHTML;
+                            labelContainer.innerHTML = "COIN";
+                            var msg = "A coin to toss";
                         }
                         else if(prediction[i].className === "MOBILE" ){
-                            labelContainer.innerHTML = document.getElementById('mobile').innerHTML;
+                            labelContainer.innerHTML = "MOBILE";
+                            var msg = "A phone to remember";
                         }
                         else if(prediction[i].className === "WATCH" ){
-                            labelContainer.innerHTML = document.getElementById('watch').innerHTML;
+                            labelContainer.innerHTML = "WATCH";
+                            var msg = "Watch it, it's a watch";
                         }
                         else if(prediction[i].className === "NOTEBOOK" ){
-                            labelContainer.childNodes[i].innerHTML = document.getElementById('notebook').innerHTML;
+                            labelContainer.childNodes[i].innerHTML = "NOTEBOOK";
+                            var msg = "Write it down, a notebook";
                         }
                         else if(prediction[i].className === "DESKTOP" ){
-                            labelContainer.innerHTML = document.getElementById('desktop').innerHTML;
+                            labelContainer.innerHTML = "DESKTOP";
+                            var msg = "A desktop";
                         }
                         else if(prediction[i].className === "CHAIR" ){
-                            labelContainer.innerHTML = document.getElementById('chair').innerHTML;
+                            labelContainer.innerHTML = "CHAIR";
+                            var msg = "Sitdown, it's a chair";
                         }
                         else if(prediction[i].className === "HAIR" ){
-                            labelContainer.innerHTML = document.getElementById('hair').innerHTML;
+                            labelContainer.innerHTML = "HAIR";
+                            var msg = "hair";
                         }
                         else if(prediction[i].className === "DOG" ){
-                            labelContainer.innerHTML = document.getElementById('dog').innerHTML;
+                            labelContainer.innerHTML = "DOG";
+                            var msg = "Dog";
                         }
                         else{
-                            labelContainer.innerHTML = "Error loading"
+                            labelContainer.innerHTML = "Error loading";
+                            var msg = "Error";
                         }
+                        stopWC();
+                        let speech = new SpeechSynthesisUtterance();
+                        speech.lang = "en-US";
+                        speech.volume = 1;
+                        speech.rate = 1;
+                        speech.pitch = 1; 
+                        speech.text = msg;
+                        setInterval(() => {
+                            window.speechSynthesis.speak(speech);
+                        },2000);
                     }
                 }
             }
