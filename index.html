@@ -20,7 +20,7 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" onclick="init()" style="float: right;color: whitesmoke;">Start Scanning</button>
-			            <button class="btn btn-danger" onclick="stopWC()" style="color: whitesmoke;">Stop Scanning</button>
+			            <button class="btn btn-danger" id="stopS" onclick="stopWC()" hidden style="color: whitesmoke;">Stop Scanning</button>
                 </div>
             </div>
         </div>
@@ -43,6 +43,7 @@
                 window.requestAnimationFrame(loop);      
                 document.getElementById("webcam-container").appendChild(webcam.canvas);
                 labelContainer = document.getElementById("label-container");
+                document.getElementById('stopS').hidden = false;
             }
             async function loop() {
                 webcam.update(); 
@@ -108,7 +109,6 @@
                             window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
                         },2000);  
-                        window.speechSynthesis.pause();
                     }
                 }
             }
