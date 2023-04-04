@@ -107,13 +107,8 @@
                         setInterval(() => {
                             window.speechSynthesis.cancel();
                             window.speechSynthesis.speak(speech);
-                        },2000);
-                        speech.addEventListener("end", (event) => {
-                            if(event.utterance.text.charAt(event.charIndex)=msg.length){
-                                window.speechSynthesis.cancel();
-                                window.speechSynthesis.pause();
-                            }
-                        });   
+                            window.speechSynthesis.pause();
+                        },2000);  
                     }
                 }
             }
