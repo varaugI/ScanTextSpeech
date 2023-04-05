@@ -106,10 +106,8 @@
                         speech.rate = 1;
                         speech.pitch = 1; 
                         speech.text = msg;
-                        setInterval(() => {
-                            window.speechSynthesis.cancel();
-                            window.speechSynthesis.speak(speech);
-                        },2000);  
+                    	window.speechSynthesis.cancel();
+                        window.speechSynthesis.speak(speech);
                     }
                 }
             }
