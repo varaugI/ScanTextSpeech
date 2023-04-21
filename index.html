@@ -20,7 +20,7 @@
                     <div id="webcam-container"></div>
                 <div class="col">
                     	<button class="btn btn-success" id="startS" onclick="init()" style="float: right;color: whitesmoke;">Start Scanning</button>
-			            <button class="btn btn-danger" id="stopS" onclick="stopWC()" hidden style="float: right;color: whitesmoke;">Stop Scanning</button>
+			            <button class="btn btn-danger" id="stopS" onclick="window.location.reload();" hidden style="float: right;color: whitesmoke;">Stop Scanning</button>
                 </div>
             </div>
         </div>
@@ -111,12 +111,6 @@
                     }
                 }
             }
-		    function stopWC(){
-			    webcam.stop();
-                document.getElementById("webcam-container").removeChild(webcam.canvas);
-                document.getElementById('startS').hidden = false;
-                document.getElementById('stopS').hidden = true;
-		    }
         </script>
 
     </body>
