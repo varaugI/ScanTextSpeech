@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div id="webcam-container"></div>
+                </div>
                 <div class="col">
                     	<button class="btn btn-success" id="startS" onclick="init()" style="float: right;color: whitesmoke;">Start Scanning</button>
 			            <button class="btn btn-danger" id="stopS" onclick="window.location.reload();" hidden style="float: right;color: whitesmoke;">Stop Scanning</button>
@@ -99,7 +99,6 @@
                             labelContainer.innerHTML = "Error loading";
                             var msg = "Error";
                         }
-                        stopWC();
                         let speech = new SpeechSynthesisUtterance();
                         speech.lang = "en-US";
                         speech.volume = 1;
